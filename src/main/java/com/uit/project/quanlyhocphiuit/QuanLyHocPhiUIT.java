@@ -4,6 +4,8 @@
 
 package com.uit.project.quanlyhocphiuit;
 
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author thebl
@@ -11,6 +13,9 @@ package com.uit.project.quanlyhocphiuit;
 public class QuanLyHocPhiUIT {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        SwingUtilities.invokeLater(() -> {
+            AppFrame frame = new AppFrame();
+            frame.setVisible(true);
+        });
     }
 }
