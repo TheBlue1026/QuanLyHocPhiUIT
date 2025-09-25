@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import styles.UIStyle;
 import com.uit.project.quanlyhocphiuit.AppFrame;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConfirmationPanel extends JPanel {
     private JButton backBtn;
@@ -42,7 +45,11 @@ public class ConfirmationPanel extends JPanel {
                 parent = parent.getParent();
             }
             if (parent instanceof AppFrame frame) {
-                frame.navigateTo("paymentForm");
+                try {
+                    frame.navigateTo("paymentForm");
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConfirmationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -52,7 +59,11 @@ public class ConfirmationPanel extends JPanel {
                 parent = parent.getParent();
             }
             if (parent instanceof AppFrame frame) {
-                frame.navigateTo("success");
+                try {
+                    frame.navigateTo("success");
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConfirmationPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

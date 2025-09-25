@@ -79,11 +79,7 @@ public class PaymentFormPanel extends JPanel {
             HocPhiController controller = new HocPhiController();
             
             boolean success = true;
-            try {
-                success = controller.payHocPhi(mssv, maHP);
-            } catch (SQLException ex) {
-                Logger.getLogger(PaymentFormPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            success = controller.payHocPhi(mssv, maHP);
 
             if (success) {
                 // Chuyển sang PaymentSuccess
@@ -92,7 +88,11 @@ public class PaymentFormPanel extends JPanel {
                     parent = parent.getParent();
                 }
                 if (parent instanceof AppFrame frame) {
-                    frame.navigateTo("success"); // tên page hoặc panel PaymentSuccess
+                    try {
+                        frame.navigateTo("success"); // tên page hoặc panel PaymentSuccess
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PaymentFormPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Thanh toán thất bại!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -305,14 +305,10 @@ public class PaymentFormPanel extends JPanel {
        if (mssv == null || maHP == null) return;
 
        HocPhiController controller = new HocPhiController();
-       try {
-           HocPhi hp = controller.getHocPhi(mssv, maHP);
-           if (hp != null) {
-               // populate infoPanel
-               populateFields(hp.getMaHP(), hp.getHocKy(), hp.getSoTien());
-           }
-       } catch (SQLException e) {
-           e.printStackTrace();
+       HocPhi hp = controller.getHocPhi(mssv, maHP);
+       if (hp != null) {
+           // populate infoPanel
+           populateFields(hp.getMaHP(), hp.getHocKy(), hp.getSoTien());
        }
    }
 }

@@ -1,74 +1,60 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package models;
 
-import java.sql.Date;
+/**
+ *
+ * @author thebl
+ */
+public class HocPhan {
 
-public class HocPhi {
-    private String mssv;
-    private String maHP;
-    private double soTien;
-    private String hocKy;
-    private String trangThai; // CHUA_TT or DA_TT
-
-    public HocPhi() {}
-
-    public HocPhi(String mssv, String maHP, double soTien, String hocKy, String trangThai) {
-        this.mssv = mssv;
-        this.maHP = maHP;
-        this.soTien = soTien;
-        this.hocKy = hocKy;
-        this.trangThai = trangThai;
-    }
-
-    public String getMssv() { return mssv; }
-    public void setMssv(String mssv) { this.mssv = mssv; }
-
-    public String getMaHP() { return maHP; }
-    public void setMaHP(String maHP) { this.maHP = maHP; }
-
-    public double getSoTien() { return soTien; }
-    public void setSoTien(double soTien) { this.soTien = soTien; }
-
-    public String getHocKy() { return hocKy; }
-    public void setHocKy(String hocKy) { this.hocKy = hocKy; }
-
-    public String getTrangThai() { return trangThai; }
-    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
-
-    @Override
-    public String toString() {
-        return String.format("HocPhi{mssv='%s', maHP='%s', soTien=%.2f, hocKy='%s', trangThai='%s'}",
-            mssv, maHP, soTien, hocKy, trangThai);
-    }
-
-    public double getSoTienPhaiDong() {
+    public String getMaHP() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public double getSoTienDaDong() {
+    public String getTenHP() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public Object getNgayTaoKhoanPhi() {
+    public int getSoTinChi() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public String getMaHP_SV() {
+    public double getDonGiaTinChi() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setMaHP_SV(String string) {
+    public String getHocKy() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setSoTienPhaiDong(double aDouble) {
+    public String getNamHoc() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setNgayTaoKhoanPhi(Date date) {
+    public String getMaGiangVien() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setSoTienDaDong(double aDouble) {
+    public void setMaHP(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setTenHP(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setSoTinChi(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setDonGiaTinChi(double aDouble) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void setHocKy(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -76,11 +62,8 @@ public class HocPhi {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void setMSSV(String string) {
+    public void setMaGiangVien(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public void setMaHocPhi(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }

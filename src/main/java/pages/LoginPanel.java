@@ -1,6 +1,6 @@
 package pages;
 
-import controllers.SinhVienController;
+import controllers.NguoiDungController;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -34,9 +34,9 @@ public class LoginPanel extends JPanel {
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.WEST;
-        JLabel usernameLabel = new JLabel("Mã số sinh viên");
-        usernameLabel.setFont(new Font("Arial", Font.BOLD, 14)); // in đậm
-        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // khoảng cách 5px tới input
+        JLabel usernameLabel = new JLabel("Tên đăng nhập"); // Đã sửa tên label
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        usernameLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         add(usernameLabel, gbc);
 
         // Username field
@@ -53,7 +53,7 @@ public class LoginPanel extends JPanel {
 
         // Password field (an toàn)
         passwordField = new JPasswordField();
-        passwordField.setEchoChar('•'); // ký tự bullet hiển thị thay vì text thật
+        passwordField.setEchoChar('•');
         passwordField.setPreferredSize(new Dimension(300, 35));
         passwordField.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 2, true));
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -88,22 +88,20 @@ public class LoginPanel extends JPanel {
         add(loginButton, gbc);
 
         loginButton.addActionListener(e -> {
-            String mssv = usernameField.getText().trim();
+            String username = usernameField.getText().trim();
             char[] passwordChars = passwordField.getPassword(); // lấy password an toàn
             String password = new String(passwordChars); // chuyển sang String để so sánh
-            // xóa password char array ngay sau khi dùng
             java.util.Arrays.fill(passwordChars, '0');
 
-            SinhVienController controller = new SinhVienController();
-            boolean success = controller.login(mssv, password);
+            NguoiDungController controller = new NguoiDungController();
+            boolean success = controller.login(username, password);
 
             if (success) {
-                // redirect sang trang PaymentForm hoặc SuccessPanel
                 onLoginSuccess.run();
             } else {
                 JOptionPane.showMessageDialog(
                     this,
-                    "MSSV hoặc mật khẩu không đúng",
+                    "Tên đăng nhập hoặc mật khẩu không đúng",
                     "Lỗi đăng nhập",
                     JOptionPane.ERROR_MESSAGE
                 );
@@ -113,13 +111,13 @@ public class LoginPanel extends JPanel {
     }
 
     private void styleTextField(JTextField field) {
-        field.setBorder(new LineBorder(new Color(150, 150, 150), 2)); // border dày
+        field.setBorder(new LineBorder(new Color(150, 150, 150), 2));
         field.setBackground(Color.WHITE);
         field.setFont(new Font("Arial", Font.PLAIN, 14));
         field.setMargin(new Insets(8, 12, 8, 12));
         field.setOpaque(false);
         field.setPreferredSize(new Dimension(300, 35));
-        field.setUI(new RoundedTextFieldUI()); // bo tròn
+        field.setUI(new RoundedTextFieldUI());
     }
 
     // Getter

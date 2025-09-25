@@ -8,6 +8,9 @@ import pages.DashboardPanel;
 import pages.LoginPanel;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ui.*;
 
 public class AppFrame extends JFrame {
@@ -16,7 +19,7 @@ public class AppFrame extends JFrame {
     private JPanel contentArea;     // CardLayout bên trong main layout
     private SidebarPanel sidebar;
 
-    public AppFrame() {
+    public AppFrame() throws SQLException {
         setTitle("Quản Lý Học Phí UIT");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 600);
@@ -35,12 +38,18 @@ public class AppFrame extends JFrame {
 
     // === Khởi tạo login panel ===
     private void initLogin() {
-        LoginPanel loginPanel = new LoginPanel(() -> navigateTo("main"));
+        LoginPanel loginPanel = new LoginPanel(() -> {
+            try {
+                navigateTo("main");
+            } catch (SQLException ex) {
+                Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         rootContainer.add(loginPanel, "login");
     }
 
     // === Khởi tạo main layout ===
-    private void initMainLayout() {
+    private void initMainLayout() throws SQLException {
         // Main layout (sidebar + content)
         JPanel mainLayout = new JPanel(new BorderLayout());
         mainLayout.setBackground(Color.WHITE);
@@ -49,8 +58,14 @@ public class AppFrame extends JFrame {
         JPanel sidebarWrapper = new JPanel(new BorderLayout());
         sidebarWrapper.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         sidebarWrapper.setOpaque(false);
-
-        sidebar = new SidebarPanel(this::navigateTo);
+    
+        sidebar = new SidebarPanel(screen -> {
+            try {
+                navigateTo(screen);
+            } catch (SQLException ex) {
+                Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         sidebarWrapper.add(sidebar, BorderLayout.CENTER);
         mainLayout.add(sidebarWrapper, BorderLayout.WEST);
 
@@ -80,7 +95,7 @@ public class AppFrame extends JFrame {
     // === Điều hướng giữa các màn hình ===
     // Xóa registerContentPanel cũ
     // private void registerContentPanel(String name, JPanel panel) { ... }  // không cần nữa
-    public void navigateTo(String screen) {
+    public void navigateTo(String screen) throws SQLException {
         CardLayout rootLayout = (CardLayout) rootContainer.getLayout();
 
         switch (screen) {
@@ -93,7 +108,13 @@ public class AppFrame extends JFrame {
                     }
                 }
                 // Tạo panel login mới
-                JPanel loginPanel = new LoginPanel(() -> navigateTo("main"));
+                JPanel loginPanel = new LoginPanel(() -> {
+            try {
+                navigateTo("main");
+            } catch (SQLException ex) {
+                Logger.getLogger(AppFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
                 loginPanel.setName("login");
                 rootContainer.add(loginPanel, "login");
                 rootLayout.show(rootContainer, "login");
@@ -114,7 +135,7 @@ public class AppFrame extends JFrame {
     }
 
     // Hiển thị panel trong content area (initialize lại mỗi lần)
-    private void showContent(String screen) {
+    private void showContent(String screen) throws SQLException {
         // Xóa panel cũ nếu đã tồn tại
         for (Component comp : contentArea.getComponents()) {
             if (comp.getName() != null && comp.getName().equals(screen)) {

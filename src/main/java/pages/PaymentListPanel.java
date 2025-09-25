@@ -17,7 +17,7 @@ public class PaymentListPanel extends JPanel {
     private HocPhiDAO hocPhiDAO;
     private JTable table;
 
-    public PaymentListPanel() {
+    public PaymentListPanel() throws SQLException {
         hocPhiDAO = new HocPhiDAO();
 
         setLayout(new BorderLayout());
@@ -36,18 +36,14 @@ public class PaymentListPanel extends JPanel {
         table = tablePanel.getTable();
 
         // load data
-        try {
-            List<HocPhi> list = hocPhiDAO.getHocPhiTheoMSSV("001");
-            for (HocPhi hp : list) {
-                tablePanel.addRow(new Object[]{
-                    hp.getMaHP(),
-                    hp.getSoTien(),
-                    hp.getHocKy(),
-                    hp.getTrangThai().equals("CHUA_TT") ? "Thanh toán ngay" : "Đã thanh toán"
-                });
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PaymentListPanel.class.getName()).log(Level.SEVERE, null, ex);
+        List<HocPhi> list = hocPhiDAO.getHocPhiTheoMSSV("001");
+        for (HocPhi hp : list) {
+            tablePanel.addRow(new Object[]{
+                hp.getMaHP(),
+                hp.getSoTien(),
+                hp.getHocKy(),
+                hp.getTrangThai().equals("CHUA_TT") ? "Thanh toán ngay" : "Đã thanh toán"
+            });
         }
 
         add(tablePanel, BorderLayout.CENTER);
@@ -76,7 +72,11 @@ public class PaymentListPanel extends JPanel {
                     }
                     if (parent instanceof com.uit.project.quanlyhocphiuit.AppFrame frame) {
                         Session.setCurrentMaHP(maHP);
-                        frame.navigateTo("paymentForm");
+                        try {
+                            frame.navigateTo("paymentForm");
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PaymentListPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
             }

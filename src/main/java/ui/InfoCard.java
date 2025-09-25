@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import com.uit.project.quanlyhocphiuit.AppFrame;
 import com.uit.project.quanlyhocphiuit.Session;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import styles.UIStyle;
 
 public class InfoCard extends JPanel {
@@ -48,7 +51,11 @@ public class InfoCard extends JPanel {
             Container root = SwingUtilities.getWindowAncestor(this);
             if (root instanceof AppFrame frame) {
                 Session.setCurrentMaHP(currentMaHP);
-                frame.navigateTo("paymentForm");
+                try {
+                    frame.navigateTo("paymentForm");
+                } catch (SQLException ex) {
+                    Logger.getLogger(InfoCard.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         add(payNowBtn);

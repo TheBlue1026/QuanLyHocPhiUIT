@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import com.uit.project.quanlyhocphiuit.AppFrame;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import styles.UIStyle;
 
 public class SuccessPanel extends JPanel {
@@ -69,7 +72,11 @@ public class SuccessPanel extends JPanel {
                 parent = parent.getParent();
             }
             if (parent instanceof AppFrame frame) {
-                frame.navigateTo("dashboard");
+                try {
+                    frame.navigateTo("dashboard");
+                } catch (SQLException ex) {
+                    Logger.getLogger(SuccessPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

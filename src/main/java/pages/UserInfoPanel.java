@@ -166,7 +166,7 @@ public class UserInfoPanel extends JPanel {
                 phoneLabel.setText("-");
                 addressLabel.setText("-");
 
-                majorLabel.setText(sv.getNganhHoc() != null ? sv.getNganhHoc() : "-");
+                majorLabel.setText(sv.getNganhHoc() != null ? (String) sv.getNganhHoc() : "-");
                 admissionYearLabel.setText("-");
                 classLabel.setText(sv.getMaLop() != null ? sv.getMaLop() : "-");
                 mssvLabel.setText(sv.getMSSV() != null ? sv.getMSSV() : "-");
@@ -259,20 +259,20 @@ public class UserInfoPanel extends JPanel {
                 // --- Personal info ---
                 nameLabel.setText(sv.getHoTen() != null ? sv.getHoTen() : "-");
                 birthLabel.setText(sv.getNamSinh() > 0 ? String.valueOf(sv.getNamSinh()) : "-");
-                genderLabel.setText(sv.getGioiTinh() != null ? sv.getGioiTinh() : "-");
-                phoneLabel.setText(sv.getSoDienThoai() != null ? sv.getSoDienThoai() : "-");
-                addressLabel.setText(sv.getDiaChiTamTru() != null ? sv.getDiaChiTamTru() : "-");
+                genderLabel.setText(sv.getGioiTinh() != null ? (String) sv.getGioiTinh() : "-");
+                phoneLabel.setText(sv.getSoDienThoai() != null ? (String) sv.getSoDienThoai() : "-");
+                addressLabel.setText(sv.getDiaChiTamTru() != null ? (String) sv.getDiaChiTamTru() : "-");
 
                 // --- Student info ---
-                majorLabel.setText(sv.getNganhHoc() != null ? sv.getNganhHoc() : "-");
+                majorLabel.setText(sv.getNganhHoc() != null ? (String) sv.getNganhHoc() : "-");
                 admissionYearLabel.setText(sv.getNamNhapHoc() > 0 ? String.valueOf(sv.getNamNhapHoc()) : "-");
                 classLabel.setText(sv.getMaLop() != null ? sv.getMaLop() : "-");
                 mssvLabel.setText(sv.getMSSV() != null ? sv.getMSSV() : "-");
 
                 // --- Emergency contact ---
-                emergencyNameLabel.setText(sv.getKhanCapHoTen() != null ? sv.getKhanCapHoTen() : "-");
-                emergencyPhoneLabel.setText(sv.getKhanCapSoDienThoai() != null ? sv.getKhanCapSoDienThoai() : "-");
-                emergencyAddressLabel.setText(sv.getKhanCapDiaChi() != null ? sv.getKhanCapDiaChi() : "-");
+                emergencyNameLabel.setText(sv.getKhanCapHoTen() != null ? (String) sv.getKhanCapHoTen() : "-");
+                emergencyPhoneLabel.setText(sv.getKhanCapSoDienThoai() != null ? (String) sv.getKhanCapSoDienThoai() : "-");
+                emergencyAddressLabel.setText(sv.getKhanCapDiaChi() != null ? (String)sv.getKhanCapDiaChi() : "-");
             } else {
                 clearFields();
             }

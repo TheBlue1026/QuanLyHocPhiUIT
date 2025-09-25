@@ -4,6 +4,9 @@
 
 package com.uit.project.quanlyhocphiuit;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -14,7 +17,12 @@ public class QuanLyHocPhiUIT {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            AppFrame frame = new AppFrame();
+            AppFrame frame = null;
+            try {
+                frame = new AppFrame();
+            } catch (SQLException ex) {
+                Logger.getLogger(QuanLyHocPhiUIT.class.getName()).log(Level.SEVERE, null, ex);
+            }
             frame.setVisible(true);
         });
     }
