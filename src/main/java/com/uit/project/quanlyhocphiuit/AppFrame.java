@@ -1,70 +1,162 @@
 package com.uit.project.quanlyhocphiuit;
 
-import java.awt.*;
+import pages.SuccessPanel;
+import pages.PaymentFormPanel;
+import pages.PaymentListPanel;
+import pages.UserInfoPanel;
+import pages.DashboardPanel;
+import pages.LoginPanel;
 import javax.swing.*;
+import java.awt.*;
 import ui.*;
 
 public class AppFrame extends JFrame {
-    private JPanel rootContainer;   // holds login + main layout
-    private JPanel contentArea;     // main content area (inside main layout)
-    private SidebarPanel sidebar;   // sidebar inside main layout
+
+    private JPanel rootContainer;   // CardLayout chứa login + main
+    private JPanel contentArea;     // CardLayout bên trong main layout
+    private SidebarPanel sidebar;
 
     public AppFrame() {
         setTitle("Quản Lý Học Phí UIT");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 600);
+        setLocationRelativeTo(null); // đặt giữa màn hình
 
-        // Root container with CardLayout
+        // Root container với CardLayout
         rootContainer = new JPanel(new CardLayout());
         add(rootContainer);
 
-        // --- Login Screen ---
-        JPanel loginPanel = new LoginPanel(() -> navigateTo("main")); 
-        rootContainer.add(loginPanel, "login");
+        initLogin();
+        initMainLayout();
 
-        // --- Main Layout (sidebar + content) ---
-        JPanel mainLayout = new JPanel(new BorderLayout());
-
-        // Sidebar
-        sidebar = new SidebarPanel(this::navigateTo);
-        mainLayout.add(sidebar, BorderLayout.WEST);
-
-        // Content area with CardLayout
-        contentArea = new JPanel(new CardLayout());
-        mainLayout.add(contentArea, BorderLayout.CENTER);
-
-        // Register panels inside main content area
-        registerPanel("dashboard", new DashboardPanel());
-        registerPanel("payments", new PaymentListPanel());
-        registerPanel("paymentForm", new PaymentFormPanel());
-        registerPanel("confirm", new ConfirmationPanel());
-        registerPanel("success", new SuccessPanel());
-
-        rootContainer.add(mainLayout, "main");
-
-        // Start with login screen
+        // Khởi đầu hiển thị login
         navigateTo("login");
     }
 
-    private void registerPanel(String name, JPanel panel) {
+    // === Khởi tạo login panel ===
+    private void initLogin() {
+        LoginPanel loginPanel = new LoginPanel(() -> navigateTo("main"));
+        rootContainer.add(loginPanel, "login");
+    }
+
+    // === Khởi tạo main layout ===
+    private void initMainLayout() {
+        // Main layout (sidebar + content)
+        JPanel mainLayout = new JPanel(new BorderLayout());
+        mainLayout.setBackground(Color.WHITE);
+
+        // Sidebar wrapper để padding
+        JPanel sidebarWrapper = new JPanel(new BorderLayout());
+        sidebarWrapper.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        sidebarWrapper.setOpaque(false);
+
+        sidebar = new SidebarPanel(this::navigateTo);
+        sidebarWrapper.add(sidebar, BorderLayout.CENTER);
+        mainLayout.add(sidebarWrapper, BorderLayout.WEST);
+
+        // Content area với CardLayout
+        contentArea = new JPanel(new CardLayout());
+        contentArea.setBackground(Color.WHITE);
+        contentArea.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+
+        // Đăng ký các panel con
+        registerContentPanel("dashboard", new DashboardPanel());
+        registerContentPanel("payments", new PaymentListPanel());
+        registerContentPanel("paymentForm", new PaymentFormPanel());
+        registerContentPanel("user", new UserInfoPanel());
+        registerContentPanel("confirm", new ConfirmationPanel());
+        registerContentPanel("success", new SuccessPanel());
+
+        mainLayout.add(contentArea, BorderLayout.CENTER);
+
+        rootContainer.add(mainLayout, "main");
+    }
+
+    // Đăng ký panel vào content area
+    private void registerContentPanel(String name, JPanel panel) {
         contentArea.add(panel, name);
     }
 
+    // === Điều hướng giữa các màn hình ===
+    // Xóa registerContentPanel cũ
+    // private void registerContentPanel(String name, JPanel panel) { ... }  // không cần nữa
     public void navigateTo(String screen) {
         CardLayout rootLayout = (CardLayout) rootContainer.getLayout();
 
-        if ("login".equals(screen)) {
-            rootLayout.show(rootContainer, "login");
-        } else if ("main".equals(screen)) {
-            rootLayout.show(rootContainer, "main");
-            showContent("dashboard"); // default screen after login
-        } else {
-            showContent(screen); // show inside main content area
+        switch (screen) {
+            case "login":
+                // Xóa panel login cũ nếu có
+                for (Component comp : rootContainer.getComponents()) {
+                    if ("login".equals(comp.getName())) {
+                        rootContainer.remove(comp);
+                        break;
+                    }
+                }
+                // Tạo panel login mới
+                JPanel loginPanel = new LoginPanel(() -> navigateTo("main"));
+                loginPanel.setName("login");
+                rootContainer.add(loginPanel, "login");
+                rootLayout.show(rootContainer, "login");
+                break;
+
+            case "main":
+                rootLayout.show(rootContainer, "main");
+                showContent("dashboard"); // default panel sau login
+                break;
+
+            default:
+                showContent(screen);
+                break;
         }
+
+        rootContainer.revalidate();
+        rootContainer.repaint();
     }
 
+    // Hiển thị panel trong content area (initialize lại mỗi lần)
     private void showContent(String screen) {
+        // Xóa panel cũ nếu đã tồn tại
+        for (Component comp : contentArea.getComponents()) {
+            if (comp.getName() != null && comp.getName().equals(screen)) {
+                contentArea.remove(comp);
+                break;
+            }
+        }
+
+        // Tạo panel mới dựa theo screen
+        JPanel panel;
+        switch (screen) {
+            case "dashboard":
+                panel = new DashboardPanel();
+                break;
+            case "payments":
+                panel = new PaymentListPanel();
+                break;
+            case "paymentForm":
+                panel = new PaymentFormPanel();
+                break;
+            case "user":
+                panel = new UserInfoPanel();
+                break;
+            case "confirm":
+                panel = new ConfirmationPanel();
+                break;
+            case "success":
+                panel = new SuccessPanel();
+                break;
+            default:
+                panel = new JPanel();
+        }
+
+        panel.setName(screen); // gắn tên để dễ remove lần sau
+        contentArea.add(panel, screen);
+
+        // Hiển thị panel mới
         CardLayout cl = (CardLayout) contentArea.getLayout();
         cl.show(contentArea, screen);
+
+        contentArea.revalidate();
+        contentArea.repaint();
     }
+
 }
