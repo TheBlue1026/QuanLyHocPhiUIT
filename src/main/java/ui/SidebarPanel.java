@@ -79,7 +79,7 @@ public class SidebarPanel extends JPanel {
 
         // nền sidebar + bo góc
         g2.setColor(new Color(245, 245, 245)); // màu giống UIStyle
-        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // 20px radius
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30); // 20px radius
 
         g2.dispose();
     }
